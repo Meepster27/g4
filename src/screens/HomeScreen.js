@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   FlatList,
   ActivityIndicator,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import { fetchList, LISTS } from '../api/tmdb';
 import MovieCard from '../components/MovieCard';
+import ScrollBarView from '../components/ScrollBarView';
 
 export default function HomeScreen({ navigation }) {
   const [listData, setListData] = useState({});
@@ -56,7 +56,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={true} persistentScrollbar={true} indicatorStyle="white">
+    <ScrollBarView style={styles.container}>
       {/* Hero */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>🎬 Movie Lists</Text>
@@ -109,7 +109,7 @@ export default function HomeScreen({ navigation }) {
       })}
 
       <View style={styles.footer} />
-    </ScrollView>
+    </ScrollBarView>
   );
 }
 

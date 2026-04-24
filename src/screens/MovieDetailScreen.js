@@ -3,12 +3,11 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   ActivityIndicator,
   StyleSheet,
   ImageBackground,
 } from 'react-native';
-import { fetchMovieDetails, IMAGE_BASE, BACKDROP_BASE } from '../api/tmdb';
+import ScrollBarView from '../components/ScrollBarView';
 
 const PLACEHOLDER = 'https://via.placeholder.com/300x450?text=No+Image';
 
@@ -63,7 +62,7 @@ export default function MovieDetailScreen({ route }) {
     movie.credits?.crew?.find((c) => c.job === 'Director')?.name ?? '';
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={true} persistentScrollbar={true} indicatorStyle="white">
+    <ScrollBarView style={styles.container}>
       {/* Backdrop */}
       {backdrop ? (
         <ImageBackground
@@ -133,7 +132,7 @@ export default function MovieDetailScreen({ route }) {
 
         <View style={{ height: 32 }} />
       </View>
-    </ScrollView>
+    </ScrollBarView>
   );
 }
 
