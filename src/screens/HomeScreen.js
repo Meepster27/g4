@@ -56,7 +56,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
       {/* Hero */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>🎬 MovieLists</Text>
@@ -90,7 +90,7 @@ export default function HomeScreen({ navigation }) {
               data={movies}
               keyExtractor={(item) => String(item.id)}
               horizontal
-              showsHorizontalScrollIndicator={false}
+              showsHorizontalScrollIndicator={true}
               contentContainerStyle={styles.row}
               renderItem={({ item }) => (
                 <MovieCard

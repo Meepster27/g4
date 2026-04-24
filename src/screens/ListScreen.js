@@ -32,7 +32,7 @@ export default function ListScreen({ route, navigation }) {
   useEffect(() => {
     setPage(1);
     load(1);
-  }, [listId]);
+  }, [listId, load]);
 
   const changePage = (next) => {
     setPage(next);
@@ -69,7 +69,7 @@ export default function ListScreen({ route, navigation }) {
           numColumns={2}
           contentContainerStyle={styles.grid}
           columnWrapperStyle={styles.row}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           renderItem={({ item }) => (
             <MovieCard
               movie={item}
