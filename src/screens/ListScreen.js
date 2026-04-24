@@ -70,9 +70,10 @@ export default function ListScreen({ route, navigation }) {
           contentContainerStyle={styles.grid}
           columnWrapperStyle={styles.row}
           showsVerticalScrollIndicator={true}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <MovieCard
               movie={item}
+              index={index}
               onPress={() =>
                 navigation.navigate('Detail', { movieId: item.id })
               }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   TouchableOpacity,
   Image,
@@ -6,11 +6,34 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withDelay,
+  Easing,
+} from 'react-native-reanimated';
 import { IMAGE_BASE } from '../api/tmdb';
 
 const PLACEHOLDER = 'https://via.placeholder.com/150x225?text=No+Image';
 
-export default function MovieCard({ movie, onPress }) {
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
+export default function MovieCard({ movie, onPress, index = 0 }) {
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(24);
+
+  useEffect(() => {
+    const delay = index * 60;
+    opacity.value = withDelay(delay, withTiming(1, { duration: 350, easing: Easing.out(Easing.ease) }));
+    translateY.value = withDelay(delay, withTiming(0, { duration: 350, easing: Easing.out(Easing.ease) }));
+  }, [index]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateY: translateY.value }],
+  }));
+
   const poster = movie.poster_path
     ? `${IMAGE_BASE}${movie.poster_path}`
     : PLACEHOLDER;
@@ -18,7 +41,7 @@ export default function MovieCard({ movie, onPress }) {
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
 
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
+    <AnimatedTouchable style={[styles.card, animatedStyle]} onPress={onPress} activeOpacity={0.8}>
       <Image source={{ uri: poster }} style={styles.poster} />
       <View style={styles.info}>
         <Text style={styles.title} numberOfLines={2}>
@@ -29,7 +52,7 @@ export default function MovieCard({ movie, onPress }) {
           <Text style={styles.rating}>⭐ {rating}</Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </AnimatedTouchable>
   );
 }
 

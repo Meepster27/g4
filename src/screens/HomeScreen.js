@@ -59,7 +59,7 @@ export default function HomeScreen({ navigation }) {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
       {/* Hero */}
       <View style={styles.hero}>
-        <Text style={styles.heroTitle}>🎬 MovieLists</Text>
+        <Text style={styles.heroTitle}>🎬 Movie Lists</Text>
         <Text style={styles.heroSubtitle}>
           Curated family favourites, heartfelt dramas, and laugh-out-loud comedies.
         </Text>
@@ -92,9 +92,10 @@ export default function HomeScreen({ navigation }) {
               horizontal
               showsHorizontalScrollIndicator={true}
               contentContainerStyle={styles.row}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <MovieCard
                   movie={item}
+                  index={index}
                   onPress={() =>
                     navigation.navigate('Detail', { movieId: item.id })
                   }
