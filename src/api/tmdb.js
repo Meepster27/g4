@@ -13,7 +13,7 @@ export const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 export const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 
 export const LISTS = [
-  { id: '8644544', name: 'Family' },
+  { id: '8644544', name: 'Family Love Stories' },
   { id: '8644536', name: 'Drama Love Stories' },
   { id: '8644539', name: 'Comedy Love Stories' },
 ];
