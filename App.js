@@ -1,12 +1,13 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './src/screens/HomeScreen';
 import ListScreen from './src/screens/ListScreen';
 import MovieDetailScreen from './src/screens/MovieDetailScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -18,7 +19,7 @@ export default function App() {
           headerStyle: { backgroundColor: '#032541' },
           headerTintColor: '#01d277',
           headerTitleStyle: { fontWeight: '700' },
-          contentStyle: { backgroundColor: '#0d0d1a' },
+          cardStyle: { backgroundColor: '#0d0d1a' },
         }}
       >
         <Stack.Screen
