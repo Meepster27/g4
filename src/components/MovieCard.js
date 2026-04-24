@@ -25,14 +25,19 @@ export default function MovieCard({ movie, onPress, index = 0 }) {
 
   useEffect(() => {
     const delay = index * 60;
-    opacity.value = withDelay(delay, withTiming(1, { duration: 350, easing: Easing.out(Easing.ease) }));
-    translateY.value = withDelay(delay, withTiming(0, { duration: 350, easing: Easing.out(Easing.ease) }));
+    try {
+      opacity.value = withDelay(delay, withTiming(1, { duration: 350, easing: Easing.out(Easing.ease) }));
+      translateY.value = withDelay(delay, withTiming(0, { duration: 350, easing: Easing.out(Easing.ease) }));
+    } catch (_) {
+      opacity.value = 1;
+      translateY.value = 0;
+    }
   }, [index, opacity, translateY]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
     transform: [{ translateY: translateY.value }],
-  }));
+  }), []);
 
   const poster = movie.poster_path
     ? `${IMAGE_BASE}${movie.poster_path}`
