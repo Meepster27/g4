@@ -27,7 +27,7 @@ export default function MovieCard({ movie, onPress, index = 0 }) {
     const delay = index * 60;
     opacity.value = withDelay(delay, withTiming(1, { duration: 350, easing: Easing.out(Easing.ease) }));
     translateY.value = withDelay(delay, withTiming(0, { duration: 350, easing: Easing.out(Easing.ease) }));
-  }, [index]);
+  }, [index, opacity, translateY]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
