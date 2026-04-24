@@ -63,7 +63,7 @@ export default function MovieDetailScreen({ route }) {
     movie.credits?.crew?.find((c) => c.job === 'Director')?.name ?? '';
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={true} persistentScrollbar={true} indicatorStyle="white">
       {/* Backdrop */}
       {backdrop ? (
         <ImageBackground

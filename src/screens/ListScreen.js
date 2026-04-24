@@ -70,6 +70,8 @@ export default function ListScreen({ route, navigation }) {
           contentContainerStyle={styles.grid}
           columnWrapperStyle={styles.row}
           showsVerticalScrollIndicator={true}
+          persistentScrollbar={true}
+          indicatorStyle="white"
           renderItem={({ item, index }) => (
             <MovieCard
               movie={item}
