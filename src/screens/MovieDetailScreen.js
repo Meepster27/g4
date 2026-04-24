@@ -8,6 +8,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import ScrollBarView from '../components/ScrollBarView';
+import { fetchMovieDetails, IMAGE_BASE, BACKDROP_BASE } from '../api/tmdb';
 
 const PLACEHOLDER = 'https://via.placeholder.com/300x450?text=No+Image';
 
