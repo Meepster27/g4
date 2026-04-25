@@ -11,12 +11,11 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
   const [scrollX, setScrollX] = useState(0);
   const [contentW, setContentW] = useState(0);
   const [viewW, setViewW] = useState(0);
+  const [trackW, setTrackW] = useState(0);
 
-  const trackW = Math.max(0, viewW - 8);
-  const showBar = contentW > viewW && trackW > 0;
-  const thumbW = showBar ? Math.max(THUMB_MIN, trackW * (viewW / contentW)) : 0;
-  const maxScroll = contentW - viewW;
-  const thumbLeft = showBar && maxScroll > 0 ? (scrollX / maxScroll) * (trackW - thumbW) : 0;
+  const canScroll = contentW > viewW && viewW > 0 && trackW > 0;
+  const thumbW = canScroll ? Math.max(THUMB_MIN, trackW * (viewW / contentW)) : 0;
+  const thumbLeft = canScroll ? (scrollX / (contentW - viewW)) * (trackW - thumbW) : 0;
 
   return (
     <View
@@ -42,8 +41,11 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
       />
 
       <View style={styles.trackOuter}>
-        <View style={[styles.track, { width: trackW }]}>
-          {showBar && (
+        <View
+          style={styles.track}
+          onLayout={(e) => setTrackW(e.nativeEvent.layout.width)}
+        >
+          {canScroll && (
             <View style={[styles.thumb, { width: thumbW, left: thumbLeft }]} />
           )}
         </View>
@@ -57,14 +59,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   trackOuter: {
-    height: TRACK_H + 4,
     alignSelf: 'stretch',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: TRACK_H + 4,
     paddingHorizontal: 4,
     paddingBottom: 2,
   },
   track: {
+    flex: 1,
     height: TRACK_H + 4,
     backgroundColor: TRACK_COLOR,
     borderRadius: (TRACK_H + 4) / 2,

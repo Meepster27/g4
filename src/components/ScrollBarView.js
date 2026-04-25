@@ -13,12 +13,11 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
   const [scrollY, setScrollY] = useState(0);
   const [contentH, setContentH] = useState(0);
   const [viewH, setViewH] = useState(0);
+  const [trackH, setTrackH] = useState(0);
 
-  const trackH = Math.max(0, viewH - 8);
-  const showBar = contentH > viewH && trackH > 0;
-  const thumbH = showBar ? Math.max(THUMB_MIN, trackH * (viewH / contentH)) : 0;
-  const maxScroll = contentH - viewH;
-  const thumbTop = showBar && maxScroll > 0 ? (scrollY / maxScroll) * (trackH - thumbH) : 0;
+  const canScroll = contentH > viewH && viewH > 0 && trackH > 0;
+  const thumbH = canScroll ? Math.max(THUMB_MIN, trackH * (viewH / contentH)) : 0;
+  const thumbTop = canScroll ? (scrollY / (contentH - viewH)) * (trackH - thumbH) : 0;
 
   return (
     <View
@@ -39,8 +38,11 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
       </ScrollView>
 
       <View style={styles.trackOuter}>
-        <View style={[styles.track, { height: trackH }]}>
-          {showBar && (
+        <View
+          style={styles.track}
+          onLayout={(e) => setTrackH(e.nativeEvent.layout.height)}
+        >
+          {canScroll && (
             <View style={[styles.thumb, { height: thumbH, top: thumbTop }]} />
           )}
         </View>
@@ -60,12 +62,11 @@ const styles = StyleSheet.create({
   trackOuter: {
     width: TRACK_W + 4,
     alignSelf: 'stretch',
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingVertical: 4,
     paddingRight: 2,
   },
   track: {
+    flex: 1,
     width: TRACK_W + 4,
     backgroundColor: TRACK_COLOR,
     borderRadius: (TRACK_W + 4) / 2,
