@@ -4,7 +4,7 @@ import MovieCard from './MovieCard';
 
 const TRACK_H = 4;
 const THUMB_MIN = 36;
-const TRACK_COLOR = 'rgba(255,255,255,0.12)';
+const TRACK_COLOR = 'rgba(255,255,255,0.18)';
 const THUMB_COLOR = '#01d277';
 
 export default function MovieRow({ data, onPressMovie, contentContainerStyle }) {
@@ -12,24 +12,22 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
   const [contentW, setContentW] = useState(0);
   const [viewW, setViewW] = useState(0);
 
-  const showBar = contentW > viewW && viewW > 0;
-  const trackW = viewW - 8;
+  const trackW = Math.max(0, viewW - 8);
+  const showBar = contentW > viewW && trackW > 0;
   const thumbW = showBar ? Math.max(THUMB_MIN, trackW * (viewW / contentW)) : 0;
   const maxScroll = contentW - viewW;
   const thumbLeft = showBar && maxScroll > 0 ? (scrollX / maxScroll) * (trackW - thumbW) : 0;
 
   return (
-    <View
-      style={styles.wrapper}
-      onLayout={(e) => setViewW(e.nativeEvent.layout.width)}
-    >
+    <View style={styles.wrapper}>
       <FlatList
         data={data}
         keyExtractor={(item) => String(item.id)}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={[{ paddingBottom: 14 }, contentContainerStyle]}
+        contentContainerStyle={contentContainerStyle}
         scrollEventThrottle={16}
+        onLayout={(e) => setViewW(e.nativeEvent.layout.width)}
         onScroll={(e) => setScrollX(e.nativeEvent.contentOffset.x)}
         onContentSizeChange={(w) => setContentW(w)}
         renderItem={({ item, index }) => (
@@ -41,24 +39,30 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
         )}
       />
 
-      {showBar && (
-        <View style={styles.track} pointerEvents="none">
-          <View style={[styles.thumb, { width: thumbW, left: thumbLeft }]} />
-        </View>
-      )}
+      <View style={styles.trackOuter}>
+        {showBar && (
+          <View style={[styles.track, { width: trackW }]}>
+            <View style={[styles.thumb, { width: thumbW, left: thumbLeft }]} />
+          </View>
+        )}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    position: 'relative',
+    flexDirection: 'column',
+  },
+  trackOuter: {
+    height: TRACK_H + 4,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    paddingBottom: 2,
   },
   track: {
-    position: 'absolute',
-    left: 4,
-    right: 4,
-    bottom: 2,
     height: TRACK_H + 4,
     backgroundColor: TRACK_COLOR,
     borderRadius: (TRACK_H + 4) / 2,

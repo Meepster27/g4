@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet } from 'react-native';
 
 const TRACK_W = 6;
 const THUMB_MIN = 36;
-const TRACK_COLOR = 'rgba(255,255,255,0.12)';
+const TRACK_COLOR = 'rgba(255,255,255,0.18)';
 const THUMB_COLOR = '#01d277';
 
 export default function ScrollBarView({ children, style, contentContainerStyle, scrollViewRef, ...rest }) {
@@ -14,23 +14,21 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
   const [contentH, setContentH] = useState(0);
   const [viewH, setViewH] = useState(0);
 
-  const showBar = contentH > viewH && viewH > 0;
-  const trackH = viewH - 8;
+  const trackH = Math.max(0, viewH - 8);
+  const showBar = contentH > viewH && trackH > 0;
   const thumbH = showBar ? Math.max(THUMB_MIN, trackH * (viewH / contentH)) : 0;
   const maxScroll = contentH - viewH;
   const thumbTop = showBar && maxScroll > 0 ? (scrollY / maxScroll) * (trackH - thumbH) : 0;
 
   return (
-    <View
-      style={[styles.wrapper, style]}
-      onLayout={(e) => setViewH(e.nativeEvent.layout.height)}
-    >
+    <View style={[styles.wrapper, style]}>
       <ScrollView
         ref={ref}
         style={styles.fill}
         contentContainerStyle={contentContainerStyle}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
+        onLayout={(e) => setViewH(e.nativeEvent.layout.height)}
         onScroll={(e) => setScrollY(e.nativeEvent.contentOffset.y)}
         onContentSizeChange={(_, h) => setContentH(h)}
         {...rest}
@@ -38,11 +36,13 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
         {children}
       </ScrollView>
 
-      {showBar && (
-        <View style={styles.track} pointerEvents="none">
-          <View style={[styles.thumb, { height: thumbH, top: thumbTop }]} />
-        </View>
-      )}
+      <View style={styles.trackOuter}>
+        {showBar && (
+          <View style={[styles.track, { height: trackH }]}>
+            <View style={[styles.thumb, { height: thumbH, top: thumbTop }]} />
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -50,16 +50,20 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    position: 'relative',
+    flexDirection: 'row',
   },
   fill: {
     flex: 1,
   },
+  trackOuter: {
+    width: TRACK_W + 4,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 4,
+    paddingRight: 2,
+  },
   track: {
-    position: 'absolute',
-    right: 2,
-    top: 4,
-    bottom: 4,
     width: TRACK_W + 4,
     backgroundColor: TRACK_COLOR,
     borderRadius: (TRACK_W + 4) / 2,
