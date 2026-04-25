@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  FlatList,
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { fetchList, LISTS } from '../api/tmdb';
-import MovieCard from '../components/MovieCard';
 import ScrollBarView from '../components/ScrollBarView';
+import MovieRow from '../components/MovieRow';
 
 export default function HomeScreen({ navigation }) {
   const [listData, setListData] = useState({});
@@ -86,23 +85,12 @@ export default function HomeScreen({ navigation }) {
             </View>
 
             {/* Horizontal scroll row */}
-            <FlatList
+            <MovieRow
               data={movies}
-              keyExtractor={(item) => String(item.id)}
-              horizontal
-              showsHorizontalScrollIndicator={true}
-              persistentScrollbar={true}
-              indicatorStyle="white"
               contentContainerStyle={styles.row}
-              renderItem={({ item, index }) => (
-                <MovieCard
-                  movie={item}
-                  index={index}
-                  onPress={() =>
-                    navigation.navigate('Detail', { movieId: item.id })
-                  }
-                />
-              )}
+              onPressMovie={(item) =>
+                navigation.navigate('Detail', { movieId: item.id })
+              }
             />
           </View>
         );
