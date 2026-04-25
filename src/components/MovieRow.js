@@ -19,7 +19,10 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
   const thumbLeft = showBar && maxScroll > 0 ? (scrollX / maxScroll) * (trackW - thumbW) : 0;
 
   return (
-    <View style={styles.wrapper}>
+    <View
+      style={styles.wrapper}
+      onLayout={(e) => setViewW(e.nativeEvent.layout.width)}
+    >
       <FlatList
         data={data}
         keyExtractor={(item) => String(item.id)}
@@ -27,7 +30,6 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={contentContainerStyle}
         scrollEventThrottle={16}
-        onLayout={(e) => setViewW(e.nativeEvent.layout.width)}
         onScroll={(e) => setScrollX(e.nativeEvent.contentOffset.x)}
         onContentSizeChange={(w) => setContentW(w)}
         renderItem={({ item, index }) => (
@@ -40,11 +42,11 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
       />
 
       <View style={styles.trackOuter}>
-        {showBar && (
-          <View style={[styles.track, { width: trackW }]}>
+        <View style={[styles.track, { width: trackW }]}>
+          {showBar && (
             <View style={[styles.thumb, { width: thumbW, left: thumbLeft }]} />
-          </View>
-        )}
+          )}
+        </View>
       </View>
     </View>
   );

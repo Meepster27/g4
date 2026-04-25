@@ -21,14 +21,16 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
   const thumbTop = showBar && maxScroll > 0 ? (scrollY / maxScroll) * (trackH - thumbH) : 0;
 
   return (
-    <View style={[styles.wrapper, style]}>
+    <View
+      style={[styles.wrapper, style]}
+      onLayout={(e) => setViewH(e.nativeEvent.layout.height)}
+    >
       <ScrollView
         ref={ref}
         style={styles.fill}
         contentContainerStyle={contentContainerStyle}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        onLayout={(e) => setViewH(e.nativeEvent.layout.height)}
         onScroll={(e) => setScrollY(e.nativeEvent.contentOffset.y)}
         onContentSizeChange={(_, h) => setContentH(h)}
         {...rest}
@@ -37,11 +39,11 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
       </ScrollView>
 
       <View style={styles.trackOuter}>
-        {showBar && (
-          <View style={[styles.track, { height: trackH }]}>
+        <View style={[styles.track, { height: trackH }]}>
+          {showBar && (
             <View style={[styles.thumb, { height: thumbH, top: thumbTop }]} />
-          </View>
-        )}
+          )}
+        </View>
       </View>
     </View>
   );
