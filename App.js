@@ -1,5 +1,17 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Platform } from 'react-native';
+
+// Style native browser scrollbars on web to match the app's green theme
+if (Platform.OS === 'web' && typeof document !== 'undefined') {
+  const s = document.createElement('style');
+  s.textContent = `
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #01d277; border-radius: 4px; }
+  `;
+  document.head.appendChild(s);
+}
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
