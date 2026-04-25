@@ -17,9 +17,10 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
       setBar((p) => ({ ...p, showBar: false }));
       return;
     }
-    const thumbHeight = Math.max(THUMB_MIN_HEIGHT, visibleHeight * (visibleHeight / totalHeight));
+    const trackHeight = visibleHeight - 8; // account for top:4 + bottom:4
+    const thumbHeight = Math.max(THUMB_MIN_HEIGHT, trackHeight * (visibleHeight / totalHeight));
     const maxScroll = totalHeight - visibleHeight;
-    const maxTop = visibleHeight - thumbHeight;
+    const maxTop = trackHeight - thumbHeight;
     const thumbTop = maxScroll > 0 ? (scrollY / maxScroll) * maxTop : 0;
     setBar((p) => ({ ...p, thumbHeight, thumbTop, showBar: true }));
   }
@@ -33,7 +34,8 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
     setBar((prev) => {
       const vh = prev._vh || 0;
       if (vh > 0 && contentHeight > vh) {
-        const thumbHeight = Math.max(THUMB_MIN_HEIGHT, vh * (vh / contentHeight));
+        const trackHeight = vh - 8;
+        const thumbHeight = Math.max(THUMB_MIN_HEIGHT, trackHeight * (vh / contentHeight));
         return { thumbHeight, thumbTop: 0, showBar: true, _vh: vh, _ch: contentHeight };
       }
       return { ...prev, _ch: contentHeight };
@@ -45,7 +47,8 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
     setBar((prev) => {
       const ch = prev._ch || 0;
       if (ch > 0 && ch > vh) {
-        const thumbHeight = Math.max(THUMB_MIN_HEIGHT, vh * (vh / ch));
+        const trackHeight = vh - 8;
+        const thumbHeight = Math.max(THUMB_MIN_HEIGHT, trackHeight * (vh / ch));
         return { thumbHeight, thumbTop: 0, showBar: true, _vh: vh, _ch: ch };
       }
       return { ...prev, _vh: vh };
@@ -79,17 +82,19 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: 'row',
+    position: 'relative',
   },
   fill: {
     flex: 1,
   },
   track: {
+    position: 'absolute',
+    right: 2,
+    top: 4,
+    bottom: 4,
     width: TRACK_WIDTH + 4,
     backgroundColor: TRACK_COLOR,
     borderRadius: (TRACK_WIDTH + 4) / 2,
-    marginVertical: 4,
-    marginRight: 2,
   },
   thumb: {
     position: 'absolute',
