@@ -5,28 +5,11 @@ const BAR_WIDTH = 4;
 const BAR_MIN_HEIGHT = 30;
 const BAR_COLOR = '#01d277';
 
-/**
- * A ScrollView wrapper that renders a persistent custom scroll bar on the right.
- * Props are forwarded to ScrollView. Use `scrollViewRef` to access the inner ref.
- */
 export default function ScrollBarView({ children, style, contentContainerStyle, scrollViewRef, ...rest }) {
   const internalRef = useRef(null);
   const ref = scrollViewRef || internalRef;
 
-  const [indicator, setIndicator] = useState({ height: BAR_MIN_HEIGHT, top: 0 });
-  const [containerHeight, setContainerHeight] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const fadeTimer = useRef(null);
-
-  function showBar() {
-    setVisible(true);
-    if (fadeTimer.current) clearTimeout(fadeTimer.current);
-    fadeTimer.current = setTimeout(() => setVisible(false), 1200);
-  }
-
-  function onLayout(e) {
-    setContainerHeight(e.nativeEvent.layout.height);
-  }
+  const [indicator, setIndicator] = useState({ height: 0, top: 0 });
 
   function onScroll(e) {
     const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
@@ -39,14 +22,57 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
       return;
     }
 
-    const ratio = visibleHeight / totalHeight;
-    const barHeight = Math.max(BAR_MIN_HEIGHT, visibleHeight * ratio);
+    const barHeight = Math.max(BAR_MIN_HEIGHT, visibleHeight * (visibleHeight / totalHeight));
     const maxScroll = totalHeight - visibleHeight;
     const maxTop = visibleHeight - barHeight;
-    const top = (scrollY / maxScroll) * maxTop;
+    const top = maxScroll > 0 ? (scrollY / maxScroll) * maxTop : 0;
 
     setIndicator({ height: barHeight, top });
-    showBar();
+  }
+
+  function onContentSizeChange(contentWidth, contentHeight) {
+    // Trigger initial bar render without needing a scroll event
+    const visibleHeight = indicator._visibleHeight || 0;
+    if (visibleHeight > 0 && contentHeight > visibleHeight) {
+      const barHeight = Math.max(BAR_MIN_HEIGHT, visibleHeight * (visibleHeight / contentHeight));
+      setIndicator({ height: barHeight, top: 0, _visibleHeight: visibleHeight });
+    }
+  }
+
+  function onLayout(e) {
+    const visibleHeight = e.nativeEvent.layout.height;
+    // Store visible height and show initial bar
+    setIndicator((prev) => {
+      const totalHeight = prev._totalHeight || 0;
+      if (totalHeight > visibleHeight) {
+        const barHeight = Math.max(BAR_MIN_HEIGHT, visibleHeight * (visibleHeight / totalHeight));
+        return { height: barHeight, top: 0, _visibleHeight: visibleHeight, _totalHeight: totalHeight };
+      }
+      return { ...prev, _visibleHeight: visibleHeight };
+    });
+  }
+
+  function onScrollViewLayout(e) {
+    // no-op kept for compat
+  }
+
+  function onScrollWithTotalHeight(e) {
+    const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
+    const scrollY = contentOffset.y;
+    const totalHeight = contentSize.height;
+    const visibleHeight = layoutMeasurement.height;
+
+    if (totalHeight <= visibleHeight) {
+      setIndicator({ height: 0, top: 0, _visibleHeight: visibleHeight, _totalHeight: totalHeight });
+      return;
+    }
+
+    const barHeight = Math.max(BAR_MIN_HEIGHT, visibleHeight * (visibleHeight / totalHeight));
+    const maxScroll = totalHeight - visibleHeight;
+    const maxTop = visibleHeight - barHeight;
+    const top = maxScroll > 0 ? (scrollY / maxScroll) * maxTop : 0;
+
+    setIndicator({ height: barHeight, top, _visibleHeight: visibleHeight, _totalHeight: totalHeight });
   }
 
   return (
@@ -56,20 +82,25 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
         style={styles.fill}
         contentContainerStyle={contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        onScroll={onScroll}
+        onScroll={onScrollWithTotalHeight}
+        onContentSizeChange={(w, h) => {
+          setIndicator((prev) => {
+            const vh = prev._visibleHeight || 0;
+            if (vh > 0 && h > vh) {
+              const barHeight = Math.max(BAR_MIN_HEIGHT, vh * (vh / h));
+              return { height: barHeight, top: 0, _visibleHeight: vh, _totalHeight: h };
+            }
+            return { ...prev, _totalHeight: h };
+          });
+        }}
         scrollEventThrottle={16}
         {...rest}
       >
         {children}
       </ScrollView>
 
-      {indicator.height > 0 && visible && (
-        <View
-          style={[
-            styles.bar,
-            { height: indicator.height, top: indicator.top },
-          ]}
-        />
+      {indicator.height > 0 && (
+        <View style={[styles.bar, { height: indicator.height, top: indicator.top }]} />
       )}
     </View>
   );
