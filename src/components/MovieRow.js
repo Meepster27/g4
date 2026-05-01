@@ -26,7 +26,7 @@ export default function MovieRow({ data, onPressMovie, contentContainerStyle }) 
         showsHorizontalScrollIndicator
         contentContainerStyle={contentContainerStyle}
         scrollEventThrottle={16}
-        style={{ overflowX: 'scroll', scrollbarWidth: 'thin', scrollbarColor: `${THUMB_COLOR} ${TRACK_COLOR}` }}
+        style={{ overflowX: 'auto', scrollbarWidth: 'none' }}
         renderItem={({ item, index }) => (
           <MovieCard movie={item} index={index} onPress={() => onPressMovie(item)} />
         )}

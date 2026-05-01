@@ -68,7 +68,9 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
 
 const styles = StyleSheet.create({
   webScroll: {
-    overflowY: 'auto',
+    overflowY: 'scroll',
+    scrollbarWidth: 'thin',
+    scrollbarColor: `${THUMB_COLOR} rgba(255,255,255,0.1)`,
   },
   wrapper: {
     flex: 1,

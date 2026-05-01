@@ -6,10 +6,10 @@ import { Platform } from 'react-native';
 if (Platform.OS === 'web' && typeof document !== 'undefined') {
   const s = document.createElement('style');
   s.textContent = `
-    ::-webkit-scrollbar { width: 0; height: 8px; }
+    ::-webkit-scrollbar { width: 8px; height: 0; }
     ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
     ::-webkit-scrollbar-thumb { background: #f5c518; border-radius: 4px; }
-    * { scrollbar-width: none; }
+    html, body { overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #f5c518 rgba(255,255,255,0.1); }
   `;
   document.head.appendChild(s);
 }
