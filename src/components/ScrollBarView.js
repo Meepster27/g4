@@ -25,7 +25,7 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
         ref={ref}
         style={[styles.fill, style, styles.webScroll]}
         contentContainerStyle={contentContainerStyle}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         scrollEventThrottle={16}
         {...rest}
       >
