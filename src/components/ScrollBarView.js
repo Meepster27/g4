@@ -25,7 +25,7 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
         ref={ref}
         style={[styles.fill, style, styles.webScroll]}
         contentContainerStyle={contentContainerStyle}
-        showsVerticalScrollIndicator
+        showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         {...rest}
       >
@@ -68,11 +68,7 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
 
 const styles = StyleSheet.create({
   webScroll: {
-    // Force scrollbar track to always be reserved/visible on web
-    // (overrides macOS overlay-scrollbar behaviour in Chromium/Safari)
-    overflowY: 'scroll',
-    scrollbarWidth: 'thin',          // Firefox
-    scrollbarColor: `${THUMB_COLOR} ${TRACK_COLOR}`, // Firefox
+    overflowY: 'auto',
   },
   wrapper: {
     flex: 1,

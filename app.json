@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "ios": { "supportsTablet": true },
-    "android": {}
+    "android": {},
+    "web": {}
   }
 }
