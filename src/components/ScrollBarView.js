@@ -55,9 +55,11 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     flexDirection: 'row',
+    minHeight: 0,
   },
   fill: {
     flex: 1,
+    minHeight: 0,
   },
   trackOuter: {
     width: TRACK_W + 4,
