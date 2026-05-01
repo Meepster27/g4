@@ -9,6 +9,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
     ::-webkit-scrollbar-thumb { background: #01d277; border-radius: 4px; }
+    * { scrollbar-width: thin; scrollbar-color: #01d277 rgba(255,255,255,0.1); }
   `;
   document.head.appendChild(s);
 }
