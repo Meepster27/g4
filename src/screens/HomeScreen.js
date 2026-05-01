@@ -5,12 +5,14 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import { fetchList, LISTS } from '../api/tmdb';
 import ScrollBarView from '../components/ScrollBarView';
 import MovieRow from '../components/MovieRow';
 
 export default function HomeScreen({ navigation }) {
+  const { height } = useWindowDimensions();
   const [listData, setListData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,7 +57,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <ScrollBarView style={styles.container}>
+    <ScrollBarView style={[styles.container, { height }]}>
       {/* Hero */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>🎬 Movie Lists</Text>

@@ -34,7 +34,8 @@ export default function App() {
           headerStyle: { backgroundColor: '#032541' },
           headerTintColor: '#f5c518',
           headerTitleStyle: { fontWeight: '700' },
-          cardStyle: { backgroundColor: '#0d0d1a' },
+          cardStyle: { flex: 1, backgroundColor: '#0d0d1a' },
+          contentStyle: { flex: 1, backgroundColor: '#0d0d1a' },
         }}
       >
         <Stack.Screen
