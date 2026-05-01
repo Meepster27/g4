@@ -6,12 +6,12 @@ import { Platform } from 'react-native';
 if (Platform.OS === 'web' && typeof document !== 'undefined') {
   const s = document.createElement('style');
   s.textContent = `
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    #root { height: 100%; display: flex; flex-direction: column; }
     *::-webkit-scrollbar { width: 8px; height: 0; }
     *::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
     *::-webkit-scrollbar-thumb { background: #f5c518; border-radius: 4px; }
     * { scrollbar-width: thin; scrollbar-color: #f5c518 rgba(255,255,255,0.1); }
-    html, body { overflow-x: hidden; }
-    html { overflow-y: scroll; }
   `;
   document.head.appendChild(s);
 }
