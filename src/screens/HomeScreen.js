@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
+  Platform,
   useWindowDimensions,
 } from 'react-native';
 import { fetchList, LISTS } from '../api/tmdb';
@@ -56,8 +57,15 @@ export default function HomeScreen({ navigation }) {
     );
   }
 
+  const webScrollStyle = Platform.OS === 'web' ? {
+    overflowY: 'scroll',
+    scrollbarWidth: 'thin',
+    scrollbarColor: '#f5c518 rgba(255,255,255,0.1)',
+  } : {};
+  const Wrapper = Platform.OS === 'web' ? View : ScrollBarView;
+
   return (
-    <ScrollBarView style={[styles.container, { height }]}>
+    <Wrapper style={[styles.container, { height }, webScrollStyle]}>
       {/* Hero */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>🎬 Movie Lists</Text>
@@ -99,9 +107,15 @@ export default function HomeScreen({ navigation }) {
       })}
 
       <View style={styles.footer} />
-    </ScrollBarView>
+    </Wrapper>
   );
 }
+
+const WEB_SCROLL = Platform.OS === 'web' ? {
+  overflowY: 'scroll',
+  scrollbarWidth: 'thin',
+  scrollbarColor: '#f5c518 rgba(255,255,255,0.1)',
+} : {};
 
 const styles = StyleSheet.create({
   container: {
