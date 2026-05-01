@@ -29,7 +29,7 @@ export default function MovieDetailScreen({ route }) {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#01d277" />
+        <ActivityIndicator size="large" color="#f5c518" />
       </View>
     );
   }
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     borderColor: '#f5c518',
   },
   genres: {
-    color: '#01d277',
+    color: '#f5c518',
     fontSize: 12,
     lineHeight: 18,
   },
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 14,
     borderLeftWidth: 3,
-    borderLeftColor: '#01d277',
+    borderLeftColor: '#f5c518',
     paddingLeft: 12,
     lineHeight: 20,
   },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   sectionLabel: {
-    color: '#01d277',
+    color: '#f5c518',
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 1.2,

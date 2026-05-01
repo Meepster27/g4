@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }) {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#01d277" />
+        <ActivityIndicator size="large" color="#f5c518" />
         <Text style={styles.loadingText}>Loading lists…</Text>
       </View>
     );
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   heroTitle: {
-    color: '#01d277',
+    color: '#f5c518',
     fontSize: 28,
     fontWeight: '700',
     textAlign: 'center',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   seeAll: {
-    color: '#01d277',
+    color: '#f5c518',
     fontSize: 13,
     fontWeight: '600',
   },

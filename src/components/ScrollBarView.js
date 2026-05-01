@@ -4,7 +4,7 @@ import { View, ScrollView, StyleSheet, Platform } from 'react-native';
 const TRACK_W = 6;
 const THUMB_MIN = 36;
 const TRACK_COLOR = 'rgba(255,255,255,0.18)';
-const THUMB_COLOR = '#01d277';
+const THUMB_COLOR = '#f5c518';
 
 export default function ScrollBarView({ children, style, contentContainerStyle, scrollViewRef, ...rest }) {
   const internalRef = useRef(null);

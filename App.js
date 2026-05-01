@@ -8,7 +8,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
   s.textContent = `
     ::-webkit-scrollbar { width: 0; height: 8px; }
     ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb { background: #01d277; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #f5c518; border-radius: 4px; }
     * { scrollbar-width: none; }
   `;
   document.head.appendChild(s);
@@ -30,7 +30,7 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: { backgroundColor: '#032541' },
-          headerTintColor: '#01d277',
+          headerTintColor: '#f5c518',
           headerTitleStyle: { fontWeight: '700' },
           cardStyle: { backgroundColor: '#0d0d1a' },
         }}

@@ -56,7 +56,7 @@ export default function ListScreen({ route, navigation }) {
 
       {loading ? (
         <View style={styles.centered}>
-          <ActivityIndicator size="large" color="#01d277" />
+          <ActivityIndicator size="large" color="#f5c518" />
         </View>
       ) : error ? (
         <View style={styles.centered}>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   pageBtn: {
     borderWidth: 1,
-    borderColor: '#01d277',
+    borderColor: '#f5c518',
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 18,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   pageBtnText: {
-    color: '#01d277',
+    color: '#f5c518',
     fontWeight: '600',
     fontSize: 13,
   },
