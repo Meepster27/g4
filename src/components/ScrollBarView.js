@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, ScrollView, StyleSheet, Platform } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 
 const TRACK_W = 6;
 const THUMB_MIN = 36;
@@ -18,21 +18,6 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
   const canScroll = contentH > viewH && viewH > 0 && trackH > 0;
   const thumbH = canScroll ? Math.max(THUMB_MIN, trackH * (viewH / contentH)) : 0;
   const thumbTop = canScroll ? (scrollY / (contentH - viewH)) * (trackH - thumbH) : 0;
-
-  if (Platform.OS === 'web') {
-    return (
-      <ScrollView
-        ref={ref}
-        style={[styles.fill, style, styles.webScroll]}
-        contentContainerStyle={contentContainerStyle}
-        showsVerticalScrollIndicator={true}
-        scrollEventThrottle={16}
-        {...rest}
-      >
-        {children}
-      </ScrollView>
-    );
-  }
 
   return (
     <View
@@ -67,11 +52,6 @@ export default function ScrollBarView({ children, style, contentContainerStyle, 
 }
 
 const styles = StyleSheet.create({
-  webScroll: {
-    overflowY: 'scroll',
-    scrollbarWidth: 'thin',
-    scrollbarColor: `${THUMB_COLOR} rgba(255,255,255,0.1)`,
-  },
   wrapper: {
     flex: 1,
     flexDirection: 'row',
