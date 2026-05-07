@@ -44,6 +44,8 @@ export default function ListScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* List name subheading */}
+      <Text style={styles.listHeading}>{listName}</Text>
       {/* Stats row */}
       <View style={styles.statsRow}>
         <Text style={styles.statsText}>
@@ -120,6 +122,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0d0d1a',
     flexDirection: 'column',
+  },
+  listHeading: {
+    color: '#f5c518',
+    fontSize: 22,
+    fontWeight: '700',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
   },
   statsRow: {
     flexDirection: 'row',
