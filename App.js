@@ -42,7 +42,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: '🎬 Movie Lists' }}
+          options={{ title: '🎬 Love of Love Movies!' }}
         />
         <Stack.Screen
           name="List"
