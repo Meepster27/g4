@@ -42,17 +42,17 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: '🎬 Love of Love Movies!' }}
+          options={{ title: 'Love of Love' }}
         />
         <Stack.Screen
           name="List"
           component={ListScreen}
-          options={({ route }) => ({ title: route.params.listName })}
+          options={({ route }) => ({ title: 'Love of Love' })}
         />
         <Stack.Screen
           name="Detail"
           component={MovieDetailScreen}
-          options={{ title: 'Movie Details' }}
+          options={{ title: 'Love of Love' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

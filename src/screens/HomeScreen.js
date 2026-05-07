@@ -68,7 +68,7 @@ export default function HomeScreen({ navigation }) {
     <Wrapper style={[styles.container, { height }, webScrollStyle]}>
       {/* Hero */}
       <View style={styles.hero}>
-        <Text style={styles.heroTitle}>🎬 Love of Love Movies!</Text>
+        <Text style={styles.heroTitle}>Love of Love Movies!</Text>
         <Text style={styles.heroSubtitle}>
           Curated family favourites, heartfelt dramas, and laugh-out-loud comedies.
         </Text>
