@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   title: {
-    color: '#e0e0e0',
+    color: '#f5c518',
     fontSize: 12,
     lineHeight: 16,
     fontWeight: '500',

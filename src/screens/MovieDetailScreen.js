@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   title: {
-    color: '#ffffff',
+    color: '#f5c518',
     fontSize: 20,
     fontWeight: '700',
     lineHeight: 26,

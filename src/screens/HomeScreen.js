@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   sectionTitle: {
-    color: '#e0e0e0',
+    color: '#f5c518',
     fontSize: 18,
     fontWeight: '700',
   },
